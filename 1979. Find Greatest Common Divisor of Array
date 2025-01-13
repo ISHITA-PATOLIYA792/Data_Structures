@@ -1,0 +1,126 @@
+
+# 📘 [1979. Find Greatest Common Divisor of Array](https://leetcode.com/problems/find-greatest-common-divisor-of-array/)
+
+## 📝 Problem Statement  
+
+Given an integer array `nums`, return the **greatest common divisor** of the smallest number and largest number in `nums`.  
+
+The **greatest common divisor (GCD)** of two numbers is the largest positive integer that divides both numbers without a remainder.  
+
+---
+
+## 🔍 Examples  
+
+### Example 1:  
+**Input**:  
+`nums = [2, 5, 6, 9, 10]`  
+**Output**:  
+`2`  
+
+**Explanation**:  
+- The smallest number is `2`.  
+- The largest number is `10`.  
+- The GCD of `2` and `10` is `2`.  
+
+### Example 2:  
+**Input**:  
+`nums = [7, 5, 6, 8, 3]`  
+**Output**:  
+`1`  
+
+**Explanation**:  
+- The smallest number is `3`.  
+- The largest number is `8`.  
+- The GCD of `3` and `8` is `1`.  
+
+### Example 3:  
+**Input**:  
+`nums = [3, 3]`  
+**Output**:  
+`3`  
+
+**Explanation**:  
+- The smallest and largest numbers are both `3`.  
+- The GCD of `3` and `3` is `3`.  
+
+---
+
+## 🔗 Constraints  
+
+- `2 <= nums.length <= 1000`  
+- `1 <= nums[i] <= 1000`  
+
+---
+
+## 💡 Approach  
+
+The problem can be solved in three simple steps:  
+
+1. **Identify the smallest and largest numbers**:  
+   - Traverse the array to find the smallest (`mini`) and largest (`maxi`) values.  
+
+2. **Compute the GCD**:  
+   - Use the inbuilt `gcd` function from the standard library to compute the GCD of `mini` and `maxi`.  
+
+3. **Return the result**:  
+   - The computed GCD is the answer.  
+
+---
+
+## 🍩 Code Implementation (C++)  
+
+```cpp
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+class Solution {
+public:
+    int findGCD(vector<int>& nums) {
+        // Initialize minimum and maximum values
+        int mini = nums[0];
+        int maxi = nums[0];
+
+        // Find the smallest and largest numbers in the array
+        for (int num : nums) {
+            mini = min(mini, num);
+            maxi = max(maxi, num);
+        }
+
+        // Return the GCD of the smallest and largest numbers
+        return gcd(mini, maxi);
+    }
+};
+```
+
+---
+
+## ⚙️ Complexity Analysis  
+
+- **Time Complexity**:  
+  \( O(n) \), where \( n \) is the length of the array, for finding the smallest and largest numbers. The GCD calculation runs in \( O(\log(\text{max})) \), where max is the larger of the two numbers.  
+
+- **Space Complexity**:  
+  \( O(1) \), as no additional space is used.  
+
+---
+
+## 🔥 Key Insights  
+
+1. **Min & Max**:  
+   - Finding the smallest and largest numbers is straightforward and helps reduce the problem scope to just two numbers.  
+
+2. **Built-in GCD Function**:  
+   - Using the `gcd` function from the STL simplifies the implementation and avoids writing custom logic for calculating the GCD.  
+
+---
+
+### 🛠️ How to Use  
+
+1. Clone this repository.  
+2. Include the solution in your LeetCode projects or C++ files.  
+3. Test the solution with custom inputs using your preferred IDE or platform.  
+
+---
+
+**Happy Coding! 🚀**  
