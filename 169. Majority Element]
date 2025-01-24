@@ -1,0 +1,88 @@
+# 🔢 [169. Majority Element](https://leetcode.com/problems/majority-element/)
+
+## 📜 Problem Statement
+
+Given an array `nums` of size `n`, return the **majority element**.  
+
+The **majority element** is the element that appears more than `⌊n / 2⌋` times.  
+
+You may assume that the majority element always exists in the array.
+
+---
+
+### 🔍 Examples
+
+#### Example 1:
+**Input:**  
+`nums = [3,2,3]`  
+**Output:**  
+`3`
+
+#### Example 2:
+**Input:**  
+`nums = [2,2,1,1,1,2,2]`  
+**Output:**  
+`2`
+
+---
+
+## 💡 Approach
+
+The problem can be solved using two main approaches:
+
+### 1️⃣ Using a Hash Map
+- Count the occurrences of each element using a hash map.
+- Return the element whose count exceeds `n / 2`.
+
+### 2️⃣ Boyer-Moore Voting Algorithm
+- This is a **Greedy Algorithm** designed to find the majority element in `O(n)` time and `O(1)` space.
+- **Key Idea**:  
+  - Maintain a candidate for the majority element (`el`) and a counter (`cnt`).
+  - Iterate through the array:
+    - If `cnt == 0`, set the current element as the candidate and reset the counter to 1.
+    - If the current element matches the candidate, increment the counter.
+    - Otherwise, decrement the counter.
+  - Finally, verify that the candidate is indeed the majority element.
+
+---
+
+## 👨‍💻 Code Implementation (C++)
+
+```cpp
+#include <vector>
+#include <map>
+using namespace std;
+
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        // Boyer-Moore Voting Algorithm
+        int cnt = 0;
+        int el;  // Candidate for majority element
+
+        for (int i = 0; i < nums.size(); i++) {
+            if (cnt == 0) {
+                cnt = 1;
+                el = nums[i];
+            } else if (nums[i] == el) {
+                cnt++;
+            } else {
+                cnt--;
+            }
+        }
+
+        // Verify the candidate
+        int cnt1 = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            if (nums[i] == el) {
+                cnt1++;
+            }
+        }
+
+        if (cnt1 > nums.size() / 2) {
+            return el;  // The candidate is the majority element
+        }
+
+        return -1;  // In case no majority element is found (shouldn't happen per problem constraints)
+    }
+};
