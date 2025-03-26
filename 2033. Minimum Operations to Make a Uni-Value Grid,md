@@ -1,0 +1,103 @@
+# 🚀 [2033. Minimum Operations to Make a Uni-Value Grid](https://leetcode.com/problems/minimum-operations-to-make-a-uni-value-grid/)
+
+## 📜 Problem Statement
+
+You are given a 2D integer grid of size `m x n` and an integer `x`. In one operation, you can **add** or **subtract** `x` from any element in the grid.
+
+A **uni-value grid** is a grid where all the elements are the same.
+
+Return the **minimum number of operations** to make the grid uni-value. If it is **not possible**, return `-1`.
+
+---
+
+## 🔍 Examples
+
+### Example 1:
+**Input:**  
+`grid = [[2,4],[6,8]], x = 2`  
+**Output:**  
+`4`  
+**Explanation:**  
+We can make every element equal to `4` by performing:
+- Add `x` to `2` once.
+- Subtract `x` from `6` once.
+- Subtract `x` from `8` twice.
+A total of `4` operations.
+
+---
+
+### Example 2:
+**Input:**  
+`grid = [[1,5],[2,3]], x = 1`  
+**Output:**  
+`5`  
+**Explanation:**  
+We can make every element equal to `3`.
+
+---
+
+### Example 3:
+**Input:**  
+`grid = [[1,2],[3,4]], x = 2`  
+**Output:**  
+`-1`  
+**Explanation:**  
+It is **impossible** to make every element equal.
+
+---
+
+## 💡 Approach
+
+### **Key Observations**
+1. **Check Feasibility**  
+   - Every element in the grid must have the same remainder when divided by `x`. If not, return `-1`.
+   
+2. **Find the Target Value**  
+   - Flatten the 2D grid into a 1D array and sort it.
+   - Use the **median** of the array as the target value. The median minimizes the sum of absolute differences.
+
+3. **Compute the Minimum Operations**  
+   - Compute the number of operations required to convert each element to the median.
+
+---
+
+## 👨‍💻 Code Implementation (C++)
+
+```cpp
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+class Solution {
+public:
+    int minOperations(vector<vector<int>>& grid, int x) {
+        int m = grid.size();
+        int n = grid[0].size();
+        
+        vector<int> vec;
+        // Flatten the 2D grid into a 1D array
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                vec.push_back(grid[i][j]);
+            }
+        }
+
+        int L = vec.size();
+
+        // Find the median using nth_element (O(L))
+        nth_element(vec.begin(), vec.begin() + L/2, vec.end());
+        int target = vec[L/2];
+
+        int result = 0;
+        for(int &num : vec) {
+            // Check if making all elements equal is possible
+            if (num % x != target % x) {
+                return -1;
+            }
+            // Count operations needed
+            result += abs(target - num) / x;
+        }
+
+        return result;
+    }
+};
